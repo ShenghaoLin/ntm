@@ -39,6 +39,8 @@ def train(config):
             print("batch %d: loss %f" % (batch_index, loss))
             print("original string sample: ", x[0])
             print("copied string sample: ", y_pred[0])
+        if batch_index % 5000 == 0:
+            model.save(config['save_dir'] + '_' + str(batch_index), save_format='tf')
 
 
 if __name__ == '__main__':
