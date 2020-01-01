@@ -3,6 +3,7 @@ import numpy as np
 import json
 from model_v2 import CopyModel
 from utils import generate_random_strings
+import argparse
 
 
 class SequenceCrossEntropyLoss(tf.keras.losses.Loss):
@@ -43,9 +44,47 @@ def train(config):
             model.save_weights(config['save_dir'] + '_' + str(batch_index), save_format='tf')
 
 
+def test(config, checkpoint_no):
+    model = CopyModel(
+        batch_size=config['batch_size'],
+        vector_dim=config['vector_dim'],
+        model_type=config['model_type'],
+        cell_params=config['cell_params'][config['model_type']]
+    )
+
+    model.load_weights(config['save_dir'] + '_' + str(checkpoint_no))
+
+    x = generate_random_strings(config['batch_size'], config['test_seq_length'], config['vector_dim'])
+    y_pred = model((x, config['test_seq_length']))
+    print("original string sample: ", x[0])
+    print("copied string sample: ", y_pred[0])
+
+
+
+def get_parser(config):
+    parser = argparse.ArgumentParser(description='Train/test the ntm model')
+    
+    parser.add_argument('action_type', type=str, choices=['train', 'test'],
+                        help='train/test')
+    parser.add_argument('-c, --checkpoint_no', type=int, metavar='CN', default=995000,
+                        help='Checkpoint to retrieve from. Only for testing',
+                        dest='checkpoint')
+    parser.add_argument('-l, --seq_length', type=int, metavar='L', 
+                        default=config['test_seq_length'], dest='length',
+                        help='Length of the testing data. Default is defined in the config file.')
+
+    config['test_seq_length'] = parser.parse_args().length
+
+    return parser.parse_args()
+
+
+
 if __name__ == '__main__':
     with open('copy_task_config.json') as f:
         config = json.load(f)
-    print(config)
-    if config['mode'] == 'train':
+    parser = get_parser(config)
+
+    if parser.action_type == 'train':
         train(config)
+    else:
+        test(config, parser.checkpoint)
