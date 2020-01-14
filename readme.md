@@ -8,7 +8,7 @@ You can see [my slide](https://docs.google.com/presentation/d/1FqU7q-vWN9uV7sMRt
 
 ## Prerequisites
 
-## Update:
+#### Update:
 
 Please use TensorFlow 2.0, if you are using copy_task_v2 (recommended)
 
@@ -49,7 +49,7 @@ for t in range(seq_length):
 
 #### Train and Test
 
-## Update: TensorFlow 2.0 compatible (recommended)
+##### Update: TensorFlow 2.0 compatible (recommended)
 
 To train the model, run:
 
@@ -73,7 +73,7 @@ You can always check the options by
 python copy_task_v2.py -h
 ```
 
-## TensorFlow 1.2.0 and above (not recommended)
+##### TensorFlow 1.2.0 and above (not recommended)
 
 To train the model, run:
 
