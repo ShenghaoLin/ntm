@@ -8,6 +8,10 @@ You can see [my slide](https://docs.google.com/presentation/d/1FqU7q-vWN9uV7sMRt
 
 ## Prerequisites
 
+## Update:
+
+Please use TensorFlow 2.0, if you are using copy_task_v2 (recommended)
+
 * Python 3.5
 * TensorFlow 1.2.0
 * NumPy
@@ -44,6 +48,32 @@ for t in range(seq_length):
 ```
 
 #### Train and Test
+
+## Update: TensorFlow 2.0 compatible (recommended)
+
+To train the model, run:
+
+```
+python copy_task_v2.py train
+```
+
+You can specify the config information in copy_task_config.json
+
+To test the model, run
+
+```
+python copy_task_v2.py test
+```
+
+You can specify the testing sequence length by option --test_seq_length and target checkpoint number by --checkpoint_no.
+
+You can always check the options by 
+
+```
+python copy_task_v2.py -h
+```
+
+## TensorFlow 1.2.0 and above (not recommended)
 
 To train the model, run:
 
